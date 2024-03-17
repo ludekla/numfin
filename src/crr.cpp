@@ -11,9 +11,9 @@ double BinomialModel::martingal_prob() const {
 }
         
 double BinomialModel::price(int horizon, int n_upticks) const {
-    double up = std::pow(1 + uptick, n_upticks);
-    double down = std::pow(1 + downtick, horizon - n_upticks);
-    return spot * up * down;
+    double up = n_upticks * std::log(1 + uptick);
+    double down = (horizon - n_upticks) * std::log(1 + downtick);
+    return spot * std::exp(up + down);
 }
 
 double EuropeanOption::crr(const BinomialModel& model) {
