@@ -1,3 +1,8 @@
+/** 
+ * @file main.cpp
+ * @brief Binary application file.
+ * @author Lutz
+*/
 #include <iostream>
 
 using namespace std;
