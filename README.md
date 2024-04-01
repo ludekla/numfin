@@ -1,9 +1,13 @@
 ## Numerical Methods in Finance
 
-# Book
+# About
 
-- Authours: Maciej J. Capiński, Tomasz Zastawniak: 
-- Title: Numerical Methods in Finance with C++
-- Publisher: Cambridge University Press
-- Year: 2014
+This repo contains C++ code roughly following the code in the book  
+
+*Capiński, Zastawniak: Numerical Methods in Finance with C++ (CUP 2014)*
+
+and is therefore both an exercise in Quant Finance and OOP.
+
+
+
 
