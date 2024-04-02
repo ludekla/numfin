@@ -1,7 +1,7 @@
 #include <cmath>
 #include <vector>
 
-#include "crr.hpp"
+#include "binmarket.hpp"
 
 BinomialModel::BinomialModel(double s, double u, double d, double r):
     spot(s), uptick(u), downtick(d), rate(r) {}
