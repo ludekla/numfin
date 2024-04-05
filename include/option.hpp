@@ -5,7 +5,6 @@
  * Option classes hold option parameters and have payoff methods. 
  * 
  * @author Lutz
- *
 */
 
 #ifndef _OPTION_HPP_
@@ -24,16 +23,24 @@ private:
     int expiry;  /*!< Expiry step when option expires. */
 public:
     /**
-     * Setter for expiry member.
+     * @fn set_expiry
+     * @brief Setter for expiry member.
      * @param n value of expiry
     */
     void set_expiry(int n) { expiry = n; }
     /**
-     * Member function to be implemented by all options.
+     * @fn payoff
+     * @brief Method to be implemented by all options.
+     * @param price Current price at which to evaluate the option.
     */
     virtual double payoff(double price) = 0;
     /**
-     * Pricer member function. Implementation of CRR algorithm.
+     * @fn crr
+     * @brief Pricer function. 
+     * 
+     * Implementation of CRR algorithm.
+     * 
+     * @param model BinomialModel object with market data.
     */
     double crr(const BinomialModel& model);
 };
