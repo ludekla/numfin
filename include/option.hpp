@@ -38,11 +38,20 @@ public:
      * @fn crr
      * @brief Pricer function. 
      * 
-     * Implementation of CRR algorithm.
+     * Implementation of CRR algorithm.Vector
      * 
      * @param model BinomialModel object with market data.
     */
     double crr(const BinomialModel& model);
+    /**
+     * @fn snell
+     * @brief Pricer function. 
+     * 
+     * Implementation of Snell algorithm.
+     * 
+     * @param model BinomialModel object with market data.
+    */
+    double snell(const BinomialModel& model, bool display);
 };
 
 /**
