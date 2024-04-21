@@ -13,12 +13,12 @@
 #include "binmarket.hpp"
 
 /**
- * @class EuroOption
- * @brief Abstract European Option class.
+ * @class Option
+ * @brief Abstract Option class.
  * 
- * European options have a fixed expiry step.
+ * Options have a fixed expiry step.
 */
-class EuropeanOption {
+class Option {
 private:
     int expiry;  /*!< Expiry step when option expires. */
 public:
@@ -60,7 +60,7 @@ public:
  * 
  * Class inherits the CRR pricing function and the expiry variable.
 */
-class CallOption : public EuropeanOption {
+class CallOption : public Option {
     private:
         double strike; /*!< Strike price of the call option. */
     public:
@@ -91,7 +91,7 @@ class CallOption : public EuropeanOption {
  * 
  * Class inherits the CRR pricing function and the expiry variable.
 */
-class PutOption : public EuropeanOption {
+class PutOption : public Option {
     private:
         double strike; /*!< Strike price of the put option. */
     public:

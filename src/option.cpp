@@ -17,7 +17,7 @@ double PutOption::payoff(double price) {
     return (price < strike) ? strike - price : 0.0;
 }
 
-double EuropeanOption::crr(const BinomialModel& model) {
+double Option::crr(const BinomialModel& model) {
     double q = model.martingal_prob();
     double dc = 1.0/(1.0 + model.get_rate()); // discount
     std::vector<double> prices(expiry + 1);
@@ -31,7 +31,7 @@ double EuropeanOption::crr(const BinomialModel& model) {
     return prices[0];
 }
 
-double EuropeanOption::snell(const BinomialModel& model, bool display) {
+double Option::snell(const BinomialModel& model, bool display) {
     double q = model.martingal_prob();
     double dc = 1.0 / (1.0 + model.get_rate()); // discount
     Lattice<double> lat(expiry);   // price values
