@@ -34,17 +34,28 @@ double EuropeanOption::crr(const BinomialModel& model) {
 double EuropeanOption::snell(const BinomialModel& model, bool display) {
     double q = model.martingal_prob();
     double dc = 1.0 / (1.0 + model.get_rate()); // discount
-    Lattice lat(expiry);
-    for (int i = 0; i <= expiry; i++)
+    Lattice<double> lat(expiry);   // price values
+    Lattice<bool> policy(expiry);  // stopping policy tree
+    for (int i = 0; i <= expiry; i++) {
         lat.set(expiry, i, payoff(model.price(expiry, i)));
+        policy.set(expiry, i, true);
+    }
     double val;
     for (int j = expiry - 1; j >= 0; j--) {
         for (int i = 0; i <= j; i++) {
             lat.set(j, i, payoff(model.price(j, i)));
             val = dc * (q * lat.get(j+1, i+1) + (1.0 - q)*lat.get(j+1, i));
-            if (val > lat.get(j, i)) lat.set(j, i, val);
+            if (val > lat.get(j, i)) {
+                lat.set(j, i, val);
+                policy.set(j, i, false);
+            } else if (lat.get(j, i) == 0.0) {
+                policy.set(j, i, false);
+            }
         }
     }
-    if (display) lat.display();
+    if (display) {
+        lat.display("Price Tree:");
+        policy.display("Stopping Policy Tree:");
+    }
     return lat.get(0, 0);
 }
