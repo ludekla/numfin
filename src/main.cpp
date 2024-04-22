@@ -56,10 +56,24 @@ int main(int args, char **argv) {
 
     CallOption call(expiry, call_strike);
     PutOption put(expiry, put_strike);
+    DigitalCall dcall(expiry, call_strike);
+    DigitalPut dput(expiry, put_strike);
 
-    cout << "European Call: " << call.crr(bm) << endl;
-    cout << "European Put:  " << put.crr(bm) << endl;
-    cout << "American Put:  " << put.snell(bm, display) << endl;
+    // Spread Options
+    double lo = (call_strike < put_strike) ? call_strike : put_strike;
+    double hi = (call_strike < put_strike) ? put_strike : call_strike;
+    DoubleDigit doud(expiry, lo, hi);
+    BullSpread bull(expiry, lo, hi);
+    BearSpread bear(expiry, lo, hi);
+
+    cout << "Call Option:     " << call.crr(bm) << endl;
+    cout << "Put: Option:     " << put.crr(bm) << endl;
+    cout << "Digital Call:    " << dcall.crr(bm) << endl;
+    cout << "Digital Put:     " << dput.crr(bm) << endl;
+    cout << "Double Digital:  " << doud.crr(bm) << endl;
+    cout << "Bull Spread:     " << bull.crr(bm) << endl;
+    cout << "Bear Spread:     " << bear.crr(bm) << endl;
+    cout << "American Put:    " << put.snell(bm, display) << endl;
 
     return 0;
 }

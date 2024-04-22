@@ -17,6 +17,32 @@ double PutOption::payoff(double price) {
     return (price < strike) ? strike - price : 0.0;
 }
 
+double DigitalCall::payoff(double price) {
+    return (price > strike) ? 1.0 : 0.0;
+}
+
+double DigitalPut::payoff(double price) {
+    return (price < strike) ? 1.0 : 0.0;
+}
+
+double DoubleDigit::payoff(double price) {
+    if (price < lo) return 0.0;
+    else if (price > hi) return 0.0;
+    return 1.0;
+}
+
+double BullSpread::payoff(double price) {
+    if (price < lo) return 0.0;
+    else if (price > hi) return hi - lo;
+    return price - lo;
+}
+
+double BearSpread::payoff(double price) {
+    if (price < lo) return hi - lo;
+    else if (price > hi) return 0.0;
+    return hi - price;
+}
+
 double Option::crr(const BinomialModel& model) {
     double q = model.martingal_prob();
     double dc = 1.0/(1.0 + model.get_rate()); // discount
