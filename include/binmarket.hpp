@@ -55,6 +55,17 @@ public:
      * @return Risk-neutral rate.
     */
     double get_rate() const { return rate; }
+    /**
+     * @fn forward_price
+     * @brief Computes the price of a forward.
+     * 
+     * The price of a forward is calculated based on the spot price
+     * of the underlying and the interest rate.
+     * 
+     * @param maturity Time step of maturity of the forward contract. 
+     * @return Forward price. 
+    */
+    double forward_price(double maturity); 
 };
 
 #endif 

@@ -66,6 +66,7 @@ int main(int args, char **argv) {
     BullSpread bull(expiry, lo, hi);
     BearSpread bear(expiry, lo, hi);
 
+    cout << "Forward price:   " << bm.forward_price(expiry) << endl;
     cout << "Call Option:     " << call.crr(bm) << endl;
     cout << "Put: Option:     " << put.crr(bm) << endl;
     cout << "Digital Call:    " << dcall.crr(bm) << endl;

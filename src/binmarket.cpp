@@ -21,3 +21,7 @@ double BinomialModel::price(int horizon, int n_upticks) const {
     double down = (horizon - n_upticks) * std::log(1 + downtick);
     return spot * std::exp(up + down);
 }
+
+double BinomialModel::forward_price(double maturity) {
+    return spot * std::exp(rate * maturity);
+}
