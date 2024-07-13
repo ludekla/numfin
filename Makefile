@@ -1,8 +1,8 @@
 CC = g++
 INC = -I include
 
-BIN = bin/snell
-OBJS = bin/main.o bin/option.o bin/binmarket.o
+BIN = bin/nonlin
+OBJS = bin/main.o bin/nonlin.o
 
 $(BIN): $(OBJS)
 	$(CC) -o $@ $^
