@@ -8,7 +8,7 @@ int main(int args, char * argv[]) {
     cout << "Hello Square Root." << endl;
 
     if (args != 2) {
-        cout << "Usage: bin/root [NUMBER]\nNUMBER: 0, 1 or 2" << endl;
+        cout << "Usage: bin/root [NUMBER]\nNUMBER: 0-4" << endl;
         return 1;
     }
 
@@ -16,14 +16,24 @@ int main(int args, char * argv[]) {
     double prec = 1e-8;
     int method = atoi(argv[1]);
 
+    SquareRoot sq_fn(2.0);
+
     switch (method) {
     case 0:
         result = bisection(square_fn, 2, 1.0, 2.0, prec);
-        cout << "Square root of 2 (bisection): ";
+        cout << "Square root of 2 (Bisection): ";
         break;
     case 1:
         result = newton_raphson(square_fn, square_dfn, 2, 1.0, 2.0, prec);
         cout << "Square root of 2 (Newton-Raphson): ";
+        break;
+    case 2:
+        result = bisection(&sq_fn, 1.0, 2.0, prec);
+        cout << "Square root of 2 (Bisection OOP): ";
+        break;
+    case 3:
+        result = newton_raphson(&sq_fn, 1.0, 2.0, prec);
+        cout << "Square root of 2 (Newton-Raphson OOP): ";
         break;
     default:
         result = square_root(2.0, prec);
