@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "nonlin.hpp"
 
@@ -115,3 +116,38 @@ double newton_raphson(Function * fn, double l, double r, double eps) {
 
     return guess;
 }
+
+double Bond::evaluate(double yield) const {
+    double sum = 0.0;
+    for (auto p : coupons) {
+        sum += exp(-yield * p.time) * p.amount;
+    }
+    size_t n = coupons.size() - 1;
+    double t = coupons.at(n).time;
+    return sum + exp(-yield * t) * principal;
+}
+
+double Bond::value(double yield) const {
+    return evaluate(yield) - mvalue;
+}
+
+double Bond::deriv(double yield) const {
+    double sum = 0.0;
+    for (auto p : coupons) {
+        sum -= p.time * exp(-yield * p.time) * p.amount;
+    }
+    size_t n = coupons.size() - 1;
+    double t = coupons.at(n).time;
+    return sum - t * exp(-yield * t) * principal;
+}
+
+double Bond::newtonraph_yield(double value, double eps) {
+    mvalue = value;
+    return newton_raphson_t(*this, 0.0, 1.0, eps);
+}
+
+double Bond::bisection_yield(double value, double eps) {
+    mvalue = value;
+    return bisection_t(*this, 0.0, 1.0, eps);
+}
+

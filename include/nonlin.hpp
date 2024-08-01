@@ -1,6 +1,9 @@
 #ifndef __NONLIN_HPP__
 #define __NONLIN_HPP__ 
 
+#include <vector>
+#include <cmath>
+
 typedef double (*Func)(double, double);
 typedef double (*DFunc)(double);
 
@@ -73,7 +76,7 @@ double guess = (l + r) / 2.0;
     double value = fn.value(guess);
     int count = 0;
 
-    while (value > eps) {
+    while (absval(value) > eps) {
         guess -= value / fn.deriv(guess);
         value = fn.value(guess);
         count++;
@@ -83,5 +86,26 @@ double guess = (l + r) / 2.0;
 
     return guess;
 }
+
+struct Coupon {
+    double time;
+    double amount;
+};
+
+using PayVec = std::vector<Coupon>;
+
+class Bond {
+private:
+    PayVec coupons;
+    double principal;
+    double mvalue;
+public:
+    Bond(PayVec payvec, double princ): coupons(payvec), principal(princ), mvalue(0.0) {}
+    double evaluate(double yield) const;
+    double value(double yield) const;
+    double deriv(double yield) const;
+    double newtonraph_yield(double value, double eps);
+    double bisection_yield(double value, double eps);
+};
 
 #endif // _NONLIN_HPP__

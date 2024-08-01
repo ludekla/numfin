@@ -5,51 +5,23 @@
 using namespace std;
 
 int main(int args, char * argv[]) {
-    cout << "Hello Square Root." << endl;
+    cout << "Hello Coupon Bond." << endl;
 
-    if (args != 2) {
-        cout << "Usage: bin/root [NUMBER]\nNUMBER: 0-6" << endl;
-        return 1;
+    // bond payments
+    PayVec coupons {{1.0, 200.0}, {2.0, 200.0}, {3.0, 200.0}, {4.0, 200.0}};
+
+    cout << "Payments: " << endl;
+    for (int i = 0; i < coupons.size(); i++) {
+        cout << coupons[i].time << ": " << coupons[i].amount << endl;
     }
 
-    double result;
-    double prec = 1e-8;
-    int method = atoi(argv[1]);
+    double principal = 10000.0;
+    Bond bond(coupons, principal);
 
-    SquareRoot sq_fn(2.0);
-    SqrRoot sf(2.0);
-    
-    switch (method) {
-    case 0:
-        result = bisection(square_fn, 2, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Bisection): ";
-        break;
-    case 1:
-        result = newton_raphson(square_fn, square_dfn, 2, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Newton-Raphson): ";
-        break;
-    case 2:
-        result = bisection(&sq_fn, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Bisection OOP): ";
-        break;
-    case 3:
-        result = newton_raphson(&sq_fn, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Newton-Raphson OOP): ";
-        break;
-    case 4:
-        result = bisection_t(sf, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Bisection OOP Template): ";
-        break;
-    case 5:
-        result = newton_raphson_t(sf, 1.0, 2.0, prec);
-        cout << "Square root of 2 (Newton-Raphson OOP Template): ";
-        break;
-    default:
-        result = square_root(2.0, prec);
-        cout << "Square root of 2 (by iteration): ";
-    }
-    
-    cout << result << endl;
+    cout << "Bond price: " << bond.evaluate(0.02) << endl;
+
+    cout << "Yield (NR): " << bond.newtonraph_yield(9992.34, 1e-10) << endl;
+    cout << "Yield (BS): " << bond.bisection_yield(9992.34, 1e-10) << endl;
 
     return 0;
 }
