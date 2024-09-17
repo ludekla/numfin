@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 typedef double (*Func)(double, double);
 typedef double (*DFunc)(double);
@@ -47,6 +48,44 @@ double bisection(Function * fn, double left, double right, double eps);
 
 double newton_raphson(Function * fn, double l, double r, double eps);
 
+struct Coupon {
+    double time;
+    double amount;
+};
+
+using PayVec = std::vector<Coupon>;
+
+class Bond {
+private:
+    PayVec coupons;
+    double principal;
+    double mvalue;
+public:
+    Bond(PayVec payvec, double princ): coupons(payvec), principal(princ), mvalue(0.0) {}
+    double evaluate(double yield) const;
+    double value(double yield) const;
+    double deriv(double yield) const;
+    double newtonraph_yield(double value, double eps);
+    double bisection_yield(double value, double eps);
+};
+
+template <typename F>
+double newton_raphson_t(F& fn, double l, double r, double eps) {
+    double guess = (l + r) / 2.0;
+    double value = fn.value(guess);
+    int count = 0;
+
+    while (absval(value) > eps) {
+        guess -= value / fn.deriv(guess);
+        value = fn.value(guess);
+        count++;
+    }
+
+    std::cout << "Newton-Raphson Loop Template Count: " << count << std::endl;
+
+    return guess;
+}
+
 template <typename F>
 double bisection_t(F& fn, double left, double right, double eps) {
     double l = left, r = right;
@@ -69,43 +108,5 @@ double bisection_t(F& fn, double left, double right, double eps) {
 
     return m;
 }
-
-template <typename F>
-double newton_raphson_t(F& fn, double l, double r, double eps) {
-double guess = (l + r) / 2.0;
-    double value = fn.value(guess);
-    int count = 0;
-
-    while (absval(value) > eps) {
-        guess -= value / fn.deriv(guess);
-        value = fn.value(guess);
-        count++;
-    }
-
-    std::cout << "Newton-Raphson Loop Template Count: " << count << std::endl;
-
-    return guess;
-}
-
-struct Coupon {
-    double time;
-    double amount;
-};
-
-using PayVec = std::vector<Coupon>;
-
-class Bond {
-private:
-    PayVec coupons;
-    double principal;
-    double mvalue;
-public:
-    Bond(PayVec payvec, double princ): coupons(payvec), principal(princ), mvalue(0.0) {}
-    double evaluate(double yield) const;
-    double value(double yield) const;
-    double deriv(double yield) const;
-    double newtonraph_yield(double value, double eps);
-    double bisection_yield(double value, double eps);
-};
 
 #endif // _NONLIN_HPP__

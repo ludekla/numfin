@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cmath>
 
 #include "nonlin.hpp"
@@ -150,4 +149,3 @@ double Bond::bisection_yield(double value, double eps) {
     mvalue = value;
     return bisection_t(*this, 0.0, 1.0, eps);
 }
-
