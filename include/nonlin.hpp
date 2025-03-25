@@ -1,3 +1,9 @@
+/**
+ * @file nonlin.hpp
+ * @brief Collection of classes and functions for nonlinear methods.
+ * 
+ * @author Lutz
+*/
 #ifndef __NONLIN_HPP__
 #define __NONLIN_HPP__ 
 
@@ -20,18 +26,45 @@ double absval(double val);
 
 double square_root(double value, double eps);
 
+/**
+ * @class Function
+ * @brief Abstract class for implicit solutions.
+*/
 class Function {
 public:
     virtual double value(double x) = 0;
     virtual double deriv(double x) = 0;
 };
 
+/**
+ * @class SquareRoot
+ * @brief Class for computing square roots.
+ * 
+ * This class implements the two methods for
+ * computing the square root of a number.
+*/
 class SquareRoot : public Function {
 private:
-    double val;
+    double val;  /*!< Value whose square root is of interest. */
 public:
+    /**
+     * Constructor
+     * @param a Value the private member takes.
+    */
     SquareRoot(double a) { val = a; }
+    /**
+     * @fn value
+     * @brief 
+     * 
+     * @param x 
+    */
     virtual double value(double x);
+    /**
+     * @fn value
+     * @brief 
+     * 
+     * @param x 
+    */
     virtual double deriv(double x);
 };
 
